@@ -2,7 +2,7 @@ import UIKit
 
 final class HeroDetailViewController: UIViewController {
     
-    @IBOutlet weak var spinner: UIActivityIndicatorView!
+    @IBOutlet private weak var spinner: UIActivityIndicatorView!
     @IBOutlet private weak var heroImageView: AsyncImageView!
     @IBOutlet private weak var heroNameLabel: UILabel!
     @IBOutlet private weak var heroDescriptionLabel: UILabel!
@@ -27,24 +27,54 @@ final class HeroDetailViewController: UIViewController {
         viewModel.load()
     }
     
+    @IBAction func onRetryTapped(_ sender: Any) {
+    }
+    
+    // Definimos la funcionalidad para cada estado
     private func bind() {
         viewModel.onStateChanged.bind { [weak self] state in
             switch state {
             case .loading:
-                self?.spinner.startAnimating()
+                self?.renderLoading()
             case .loaded(let hero):
-                self?.renderHeroDetails(hero)
+                self?.renderLoaded(hero)
             case .error(let reason):
-                // Muestra un mensaje de error si quieres
-                print("Error: \(message)")
+                self?.renderError(reason)
             }
         }
     }
     
-    private func renderHeroDetails(_ hero: Hero) {
+    //Hacemos como en el login funciones para cada estado
+    private func renderError(_ reason: String) {
+        spinner.stopAnimating()
+        errorContainer.isHidden = false
+        errorLabel.text = reason
+        heroImageView.isHidden = true
+        heroNameLabel.isHidden = true
+        heroDescriptionLabel.isHidden = true
+        retryBotton.isHidden = false
+    }
+    
+    private func renderLoading() {
+        spinner.startAnimating()
+        errorContainer.isHidden = true
+        errorLabel.isHidden = true
+        heroImageView.isHidden = true
+        heroNameLabel.isHidden = true
+        heroDescriptionLabel.isHidden = true
+        retryBotton.isHidden = true
+    }
+    
+  
+    
+    private func renderLoaded(_ hero: Hero) {
+        spinner.stopAnimating()
         heroNameLabel.text = hero.name
         heroDescriptionLabel.text = hero.description
-        heroImageView.setImage(hero.photo) // Usamos AsyncImageView para cargar la imagen
+        heroImageView.setImage(hero.photo) //Cargamos la imagen con el async
+        retryBotton.isHidden = true
+        errorContainer.isHidden = true
+        errorLabel.isHidden = true
     }
     
     

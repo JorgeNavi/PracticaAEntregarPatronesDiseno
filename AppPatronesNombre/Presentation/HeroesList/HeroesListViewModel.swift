@@ -2,7 +2,7 @@ import Foundation
 
 //en los viewModel vamos a establcer los estados de la vista
 
-enum HeroesListState {
+enum HeroesListState: Equatable {
     case loading
     case error(reason: String)
     case success
@@ -14,9 +14,9 @@ final class HeroesListViewModel {
     //la sintaxia private(set) indica que el get es publico y accesible, pero el setter no, con lo que no se puede modificar si no es desde aqui (viewModel)
     private(set) var heroes: [Hero] = [] //guardar abajo el resultado aqui sirve para guardar en memoria los eventos y que no tengan que estar lanzando la informacion todo el rato
     
-    private let useCase: GetAllHeroesUseCase
+    private let useCase: GetAllHeroesUseCaseContract
 
-    init(useCase: GetAllHeroesUseCase) {
+    init(useCase: GetAllHeroesUseCaseContract) {
         self.useCase = useCase
     }
     

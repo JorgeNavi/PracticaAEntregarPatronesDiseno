@@ -3,7 +3,7 @@ import Foundation
 enum HeroDetailState {
     case loading
     case loaded(hero: Hero)
-    case error(message: String)
+    case error(reason: String)
 }
 
 final class HeroDetailViewModel {
@@ -15,7 +15,7 @@ final class HeroDetailViewModel {
     }
     
     func load() {
-        onStateChanged.update(newValue: .loaded(hero: hero)) // Cargamos los datos que ya tenemos
+        onStateChanged.update(newValue: .loaded(hero: hero))
     }
     
     
