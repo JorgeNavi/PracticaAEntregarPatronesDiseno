@@ -75,6 +75,9 @@ final class HeroDetailViewController: UIViewController {
         heroNameLabel.text = viewModel.hero?.name
         heroDescriptionLabel.text = viewModel.hero?.description
         heroImageView.setImage(viewModel.hero!.photo)
+        heroImageView.isHidden = false
+        heroNameLabel.isHidden = false
+        heroDescriptionLabel.isHidden = false
         retryBotton.isHidden = true
         errorContainer.isHidden = true
         errorLabel.isHidden = true

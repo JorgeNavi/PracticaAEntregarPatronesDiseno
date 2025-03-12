@@ -91,10 +91,9 @@ final class HeroesListViewController: UIViewController, UITableViewDataSource, U
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectedHero = viewModel.heroes[indexPath.row]
-        let detailViewController = HeroDetailBuilder.build(heroId: selectedHero.identifier)
+        let detailViewController = HeroDetailBuilder.build(heroName: selectedHero.name)
         navigationController?.pushViewController(detailViewController, animated: true)
     }
     
-        
 }
     
