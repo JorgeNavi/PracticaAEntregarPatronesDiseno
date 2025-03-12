@@ -23,8 +23,9 @@ final class HeroDetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        bind()
         viewModel.load()
+        bind()
+
     }
     
     @IBAction func onRetryTapped(_ sender: Any) {
@@ -36,8 +37,10 @@ final class HeroDetailViewController: UIViewController {
             switch state {
             case .loading:
                 self?.renderLoading()
-            case .loaded(let hero):
-                self?.renderLoaded(hero)
+            case .loaded:
+                self?.renderLoaded()
+                print("hero id in view is: \(self!.viewModel.hero!.identifier)")
+                //"14BB8E98-6586-4EA7-B4D7-35D6A63F5AA3"
             case .error(let reason):
                 self?.renderError(reason)
             }
@@ -67,11 +70,11 @@ final class HeroDetailViewController: UIViewController {
     
   
     
-    private func renderLoaded(_ hero: Hero) {
+    private func renderLoaded() {
         spinner.stopAnimating()
-        heroNameLabel.text = hero.name
-        heroDescriptionLabel.text = hero.description
-        heroImageView.setImage(hero.photo) //Cargamos la imagen con el async
+        heroNameLabel.text = viewModel.hero?.name
+        heroDescriptionLabel.text = viewModel.hero?.description
+        heroImageView.setImage(viewModel.hero!.photo)
         retryBotton.isHidden = true
         errorContainer.isHidden = true
         errorLabel.isHidden = true

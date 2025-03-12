@@ -1,8 +1,7 @@
-import UIKit
-
 final class HeroDetailBuilder {
-    func build(with hero: Hero) -> UIViewController {
-        let viewModel = HeroDetailViewModel(hero: hero)
+    
+    static func build(heroId: String) -> HeroDetailViewController {
+        let viewModel = HeroDetailViewModel(heroId: heroId)
         let viewController = HeroDetailViewController(viewModel: viewModel)
         return viewController
     }
